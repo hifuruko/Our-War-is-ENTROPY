@@ -229,7 +229,7 @@ In a lot of sheets, I list the same elements over and over so maybe it'll help t
 
 ----
 
-### Character item: "Action" <a name="action"></a>
+### Character item: "Action"
 ###### description:
 *An action can be configured in several mods: Maneuver, Offensive, Defensive, Passive*  
 *Actions are what are dragged into an item's effects tab.*  
@@ -291,7 +291,7 @@ I don't have a clear picture so I don't wanna waste time by trying to have somet
 
 ---
 
-### Character item: "Training" <a name="training"></a>
+### Character item: "Training"
 ###### description:
 *Trainings are the primary method of character growth.*
 *Trainings grant characters effects, access to items, special windows like component spellcasting or crafting.*
@@ -321,33 +321,66 @@ I don't have a clear picture so I don't wanna waste time by trying to have somet
 
 ### Actor <a name="actor"></a>
 ##### Overview  
-The human character type.
+*The human character type.*  
 
-An actor's sheet has a prominent weapon slot. When a weapon is inserted into the slot, the actions contained in the weapon fills out on the character sheet below the slot. Actors have stats, and an equipment panel with slots for head, chest, shoulders, arms, hands, waist, legs, feet, two slots for neck, wrist, ten slots for rings. The sheet also has an inventory with six slots. These initial six slots are special and have different properties than slots added by storage items. The character sheet has a repertoire tab, where training items are stored and displayed in item cards that can be dragged and rearranged by the player. There's also an "active effects" tab which displays all effects currently on the actor. The "actions" tab which lists all action-type items the character can use, including those registered by a weapon. A GM can manually drag action-items into a character sheet's actions tab.
+An actor's sheet has a prominent weapon slot. When a weapon is inserted into the slot, the actions contained in the weapon fill out on the character sheet below the slot.  
+Actors have stats.  
+An equipment panel with slots for head, chest, shoulders, arms, hands, waist, legs, feet. Two slots each for neck, and wrist. Ten slots for rings.  
+The sheet also has an inventory with six slots. These initial six slots are special and have different properties than slots added by storage items.
+The character sheet has a repertoire tab, where training items are stored and displayed in item cards that can be dragged and rearranged by the player.  
+There's also an "active effects" tab which displays all passive actions currently stored on the actor.  
+The "actions" tab which lists all maneuvers, offensive, defensive, and spell action items stored on the actor, except those registered by a weapon. A GM can manually drag action-items into a character sheet's actions tab.
+##### Highlights
+- Stats block
+- Weapon slot
+- Equipment display
+- Inventory
+- Actions tab
+- Active Effects tab
+- Repertoire tab
 
 ---
 
 ### Monster <a name="monster"></a>
 ##### Overview  
-The character type for all things meant to be battled. It has stats, an active effects tab, an actions tab. Its sheet features two types of inventory, both of them act as loot lists. The first is for guaranteed drops, and acts like a regular inventory. The second is for random chance drops and works by dragging a rollable table into its field to link it. The monster token can also configure extra "parts," secondary tokens with linked movement. Extra parts can be used to denote the tail of a dragon, the limbs of a giant, etc.
+*The character type for all things meant to be battled.*  
 
+It has stats, an active effects tab, an actions tab.  
+Its sheet features two types of inventory, both of them act as loot lists.  
+The first is for guaranteed drops, and acts like a regular inventory. The second is for random chance drops and works by dragging a rollable table into its field to link it.  
+The monster token can also configure extra "parts," which are secondary tokens with linked movement. Extra parts can be used to denote the tail of a dragon, the limbs of a giant, etc.
+##### Highlights
+- Stats block
+- Active Effects tab
+- Actions drag-in
+- Guaranteed loot inventory
+- Random drop rollable table
+- Extra limbs
 ---
 
 ### Vehicle <a name="vehicle"></a>
 ##### Overview  
-Is like monsters, except its linked to a scene. Players nearby a vehicle token can interact with it to enter it. Vehicles can be locked through their character sheets.
-
+Is similar to the monster type, except its linked to a scene. Players nearby a vehicle token can interact with it to enter it. A Vehicle can be locked through its character sheet.
+##### Highlights
+- Stats block
+- Active Effects tab
+- Actions drag-in
+- Guaranteed loot inventory
+- Random drop rollable table
+- Scene link & locked doors
 ---
 
 ### Loot <a name="loot"></a>
 ##### Overview  
-Is the type of token that appears to denote an item lying on the floor. When a player drops an item, it appears as loot. Loot can also be placed by the GM for an item which can be picked up off the floor. Players can pick loot up by dragging and dropping the token into their character sheets. The loot sheet displays the item's sheet. Character items can't create a loot. Deployables can't create a loot either since they create a deployable type token.
+Is the type of token that appears to denote an item lying on the floor. When a player drops an item, it appears as loot. Loot can also be placed by the GM for an item which can be picked up off the floor. Players can pick loot up by dragging and dropping the token into their character sheets. The loot sheet displays the item's sheet. Deployables can't create a loot since they create a deployable type token.
+##### Highlights
+- Double clicking the token opens the appropriate items sheet
 
 ---
 
 ### Deployable <a name="deployableactor"></a>
 ##### Overview  
-Is the type of token that appears when a deployable item is dropped by the player, similar to loot except they have a specific function. A tent kit could create a set of tiles and then delete them afterwards. A turret could set the player stationary and give them a special attack. Because of how vastly different each type of deployable could be, it should be freely programmable. The deployable sheet has three extra sections in the rules tab: "javascript" "handlebars" "css" where you program the deployable and its sheet. For a GM, the sheet that's created by the rules tab gets wrapped into a viewable form inside the deployable sheet. For a player, they see only the sheet created by the rules tab.
+The token version of the [Deployable](#deployableitem) item.
 
 ---
 
@@ -362,10 +395,3 @@ Can be configured in two modes: Vista and Gathering point. In vista mode, intera
 Is an interactable marker that displays progress toward a goal. It can be configured to ask for items or money, and players can contribute to it.
 
 ---
-
-The following can only be changed by a GM, players will see a non-editable version of it:
-The tag input field, the price field, editing actions, description text boxes, a kit's inventory.
-
-
-The following will only appear to a GM:
-The rules tab.
