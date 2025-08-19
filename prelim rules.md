@@ -34,8 +34,9 @@ A round ends when all players mark themselves as ready. During a round end, the 
 All items are subject to a universal tagging system. Tags are used for all manner of functions. Like the equipment slot on a character sheet will search for tags on an item like "head" to see if it's allowed in the head slot.
 
 - Tags are managed by a centralized tag manager which is accessible through system settings.
-- Tags appear as a small text field inside an item's header and underneath the item's name.
-- Inside an item's rules tab, there's a second tags field, "hidden tags," which functions the same as the header tags section.
+- Tags appear as chips on an item sheet
+- Tags are set on an item in the rules tab. There are two fields, "tags" and "hidden tags"
+- Hidden tags behaves the same as tags, except isn't pushed to display on the item sheet.
 - Tags always appear as chip input.
 - Right clicking a tag toggles its display between its label and its UUID.
 ----
