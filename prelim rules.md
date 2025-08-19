@@ -29,81 +29,337 @@ There is no initiative in this game system. Both teams act at once. During a rou
 
 A round ends when all players mark themselves as ready. During a round end, the GM may progress the timeline in single steps. Every player's personal timeline will play out at the same time. 1-2-3-4-5-6-7. The players will be shown their character actions playing out. Where they end up at the end of round end, they'll start at in next round. Battle continues until it ends.
 
-That concludes the combat rules. The document types: All documents have a rules tab, which is an isolated module that gets imported into each sheet. Some sheets have more to the rules tab, but all will have a field to view the document's UUID.
+## Documents
+### Item tagging as a design helper
+All items are subject to a universal tagging system. Tags are used for all manner of functions. Like the equipment slot on a character sheet will search for tags on an item like "head" to see if it's allowed in the head slot.
 
-Stats are managed by an isolated module that gets imported to each sheet type. The following are treated the same: the rules tab, a character's inventory, active effects tab, actions tab, an item's description tab, effects tab, price field.
+- Tags are managed by a centralized tag manager which is accessible through system settings.
+- Tags appear as a small text field inside an item's header and underneath the item's name.
+- Inside an item's rules tab, there's a second tags field, "hidden tags," which functions the same as the header tags section.
+- Tags always appear as chip input.
+- Right clicking a tag toggles its display between its label and its UUID.
+----
+### Standard elements
+In a lot of sheets, I list the same elements over and over so maybe it'll help to have a list of them? Like so you can just import in with handlebars or whatever. Some tabs like rules are meant to display different things for different item types so I don't know if that method will work, iunno.
+
+- **Description** - A tab with only an editable rich text field.
+- **Rules** - At its simplest, has a field displaying the UUID of the item it's in, the hidden tags field, and a field for "short description" which is another description rich text field meant for use in item cards. The rules tab can only be seen by GMs.
+- **Effects** - A drag and drop for action-type items. When an item with the effects tab is present and not inert on a character sheet, the character gains the actions listed. Actions within an effects tab displays as item cards. Clicking one of these cards uses the action, if it can be used. Otherwise, it just lints the action in chat.
+- **Item Cards** - Truncated previews of an item sheet, meant for linking in chat or display within another sheet. It should display the item's icon, name, and the short description from the rules tab.
+- **Price field** - It mostly appears in an item sheet's footer. It would be nice for this to be an import.
+- **Inventory** - A tab that simply displays slots.
+
+----
+> #### Items
+> Physical Items
+> - [Material](#material)
+> - [Weapon](#weapon)
+> - [Tool](#tool)
+> - [Storage](#storage)
+> - [Consumable](#consumable)
+> - [Equipment](#equipment)
+> - [Kit](#kit)
+> - [Deployable](#deployableitem)
+>
+> Character Building Items
+> - [Action](#action)
+> - [Training](#training)
+
+####
+----
+### Physical item: "Material" <a name="material"></a>
+###### description:
+*Is an inanimate item type. It will most commonly be used for treasures and baubles.*
+###### about its sheet:
+- Its item sheet is made of two panels laid out horizontally.
+- **Within the left panel**: Is its image, spanning a large section of the sheet.
+- Above the image, in like Header4 text is its name.
+- Below the image, is its tags field.
+- **Within the right panel**: the description and rules tabs. It also has a price field, which exists as a footer only in the right-side panel.
+###### a tally of its tabs and imports basically?:
+- description
+- rules
+- price
+----
+### Physical item: "Equipment" <a name="equipment"></a>
+###### description:
+*Equipment are items which are inert unless placed in the correct slot in the character sheet. When active, items grant characters active effects.*
+
+*Through active effects, an item can increase a player's stats or subtract a flat number from incoming damage like how armor hardness in pathfinder does or even grant entire actions for a player to use, like a shield granting "raise shield" or a spiked gauntlet adding a spiked punch action for players to use.*
+
+###### about its sheet:
+- Equipment is inert until placed in a character's equipment slot. Since the equipment slot itself will handle what can be placed in it, all the item needs to worry about is that it's in an equipment slot at all. 
+- Copies the stylings of the material sheet, except:.
+- **Within the right-side panel**: is now also an effects tab.
+- **Within its rules tab**: A checkbox for "always inert" which hides the contents of the effects tab from players.
+
+###### a tally of its tabs:
+- description
+- effects
+- rules
+- price
+----
+### Physical item: "Weapon" <a name="weapon"></a>
+###### description:
+*Although functionally equivelant to the equipment item type, the weapon slot on the actor's character sheet is core to the game's identity.*
+
+*Weapons have different qualities, like light or heavy. A quality adjusts the effectiveness of an action belonging to the item in question depending on a character's stats. Like a weapon with the heavy quality will be better for characters with a high weight class*
+
+###### about its sheet:
+- Copies the stylings of the material sheet, except:
+- **Within the left panel**: The description is now on the left panel, beneath the item image.
+- The quality is displayed as something like a chip to the right of the item's name.
+- **Within the right panel**: An effects tab and the rules tab.
+- Because the rules tab is only visible to GMs, it'd be nice if players didn't see tabs at all here but just the contents of the effects tab. Is that doable? 
+- **Within its rules tab**: A checkbox for "always inert" which hides the contents of the effects tab from players.
+- A dropdown to select the weapon's quality.
+
+###### a tally of its tabs:
+- description
+- effects
+- rules
+- price
+----
+
+### Physical item: "Tool" <a name="tool"></a>
+###### description:
+*Tools are a general purpose for any item which used. A bomb, a trap kit, a magnifying glass.*
+
+*What makes a tool different from an equipment item is that it isn't rendered inert if not in an equipment slot. Although actions from a tool won't be carried over to the player's actions tab. The experience I want to make in gameplay by doing this is that a player will have to dig around their inventory for the tool when they remember they have it, rather than simply perusing their actions list until they find something that fits their situation.*
+###### about its sheet:
+- Copies the stylings of the material sheet, except:
+- **Within the right panel**: An effects tab, which goes alongside the description tab.
+- **Within the rules tab**: A checkbox for "always inert" which hides the contents of the effects tab from players.
+###### a tally of its tabs:
+- description
+- effects
+- rules 
+- price
+----
+
+### Physical item: "Storage" <a name="storage"></a>
+###### description:
+*Storage items grant extra slots in a player's inventory.*  
+*Storages are only active if either A. Placed in an equipment slot. B. Placed in the first six slots of the character's inventory.*  
+*Hovering your mouse over a slot containing a storage item will highlight the inventory slots granted by that item, to make it easier to tell what's stored where.*
+
+*Some storages can be safely taken off, like backpacks.*    
+*Some storages work only when placed in an equipment slot, like a magic ring.*  
+*Some storages don't grant inventory slots at all, but must first be placed down on the canvas and opened, like a chest*
+
+*Storages like backpacks have their own inventories, whose slots mirror the slots that it adds to the player's inventory. So it's more like the character inventory links the slots that actually only exist in the backpack's item. When the backpack is removed, the character inventory slots simply stop being linked.*
+
+*Storages like the magic ring have no individually accessible internal inventory. Its character sheet has no visible slots. When the ring is taken off, items stored in its slots drop out of the player's inventory and onto the ground.*
+
+*Storages, like the chest have internal inventory slots but do not add to the character's inventory.*
+
+###### about its sheet:
+- Copies the stylings of the material sheet, except:
+- The sheet's display changes radically depending on options set in the rules tab.
+- **Within the rules tab**: A text field to input the number of slots this storage has.
+- A checkbox for: Must be placed in an  equipment slot.
+- A checkbox for: Drops stored items when placed on game canvas.
+- A checkbox for: Drops stored items when placed in actor inventory.
+- A checkbox for: Displays its internal inventory on its own sheet.  
+**If displays internal inventory is on**:
+- **Within the left panel**: The description is now on the left panel, beneath the item image.
+- **Within the right panel**: An inventory tab.   
+**If displays internal inventory is off**:
+- Copies the stylings of the material sheet exactly, just an image, a name, and a description. Its inventory is still there, just not visible.
+###### a tally of its tabs:
+- description
+- inventory
+- rules
+- price
+----
+
+### Physical item: "Consumable" <a name="consumable"></a>
+###### description:
+*An item which has charges which tick down on use.*  
+*On use, it grants active effects..*
+###### about its sheet:
+- Copies the stylings of a material sheet except:
+- **Within the right side panel**: There's a new internal header with a "Use" button to the left and a charges count to the right.
+- Has an effects tab, which is hidden from the player.
+- **Within the rules tab**: A checkbox for "refillable." If checked, the item will not disappear when its charge count reaches 0.
+- **If the item is on the game canvas**: The use button will be unclickable unless the character token is within 5ft/one grid space of the item's token.
+###### a tally of its tabs:
+- description
+- effects
+- rules
+- price
+----
+
+### Physical item: "Kit" <a name="kit"></a>
+###### description:
+*A kit is an item which stores other items for immediate use.*  
+*The player might be able to rearrange what's in a kit by dragging and dropping, but a player can't add or remove items.*  
+*A kit has no maximum number of slots. Therefore, its inventory sheet flexes and displays slots as needed*
+
+*A chef's spice kit might have three consumable items inside: salt, pepper, cajun.*  
+*The player would open the kit, whose sheet is largely the three items stored inside in inventory view. They would then click on salt to open its consumable sheet, and click use.*
+*The salt shaker item would be set up with an effect that adds a "pinch of salt" item to the player's inventory.*
+
+###### about its sheet:
+- Has a very lightweight header with a small image icon and name.
+- Below the header is simply the inventory tab.
+- Has a price footer.
+- has a rules tab
+
+##### a tally of its tabs:
+- inventory
+- price
+- rules
+----
+
+### Physical item: "Deployable" <a name="deployableitem"></a>
+###### description:
+*A deployable is an item which can be placed on the canvas and used in unique ways.*  
+
+*A tent kit will have a button to add a tiles which makes a tent on the canvas.*  
+*A turret will immobilize the player and grant them a shoot action.*
+
+*Because deployables are so varied, its sheet and use should be programmable on a per-item basis.*
+
+###### about its sheet:
+- There will be two tabs: Sheet and Rules.
+- **Within its rules tab**: Three fields: javascript, html, css.
+- The volitile sheet that the deployable creates should display to the GM wrapped inside the sheet tab, if this is doable.
+- When a player tries to open the deployable, what will open is the volitile sheet.
+
+----
+
+### Character item: "Action" <a name="action"></a>
+###### description:
+*An action can be configured in several mods: Maneuver, Offensive, Defensive, Passive*  
+*Actions are what are dragged into an item's effects tab.*  
+*Maneuvers, Offensive, and Defensive actions display in a character's actions tab.*  
+*Passive actions display in a character's Active Effects tab.*
+
+> ###### Action: Maneuver
+> *Interaction-type actions, like "search around" or "jump."*
+> - **Within its rules tab**:
+> - A checkbox, for "unavailable in combat"
+> - An "Action,Reaction" dropdown, next to a "one,two,three" dropdown. If "reaction" is selected, then "one,two,three" does not display.
+> - A checkbox, for "applied to self." If unchecked, a token must be selected for the action to be used.
+> - A drop-in box for what effect it applies on use, if any.
+
+> ###### Action: Offensive
+> *A melee attack. Initiating an attack creates a template before the attacker, tokens caught in the template are attacked.*  
+> *Some attacks force movement on the attacker. This can be used for effects like if a spear wielder aims the tip forward and charges. The template would be a straight line stretching to five tiles from the user the user and the movement would move the user forward by five tiles.*
+> - **Within its rules tab:**
+> - Fields for HP damage, BREAK, and knockback (in tile units)
+> - An "Action,Reaction" dropdown, next to a "one,two,three" dropdown. If "reaction" is selected, then "one,two,three" does not display.
+> - A checkbox for "self-forced movement?", a field for how far to move self, and dropdowns for in which direction relative to token facing you move in.
+> - the template in which its attack effects.
+> - A drop-in box for what effect it applies on hit, if any.
+
+> ###### Action: Defensive
+> *A defensive action reacts to incoming attacks.*  
+> *Like an enchanted shield that when struck, deflects half of the attack power back at the attcker.*  
+> *Or for a grappler's skill which waits for the opponent to attack first before dodging through and tackling.*
+> - **Within its rules tab:**
+> - How many attacks this action is effective for. The action won't apply to any more attacks than this number for this round.
+> - Fields for HP damage, BREAK, and knockback (in tile units)
+> - An "Action,Reaction" dropdown, next to a "one,two,three" dropdown. If "reaction" is selected, then "one,two,three" does not display.
+> - A checkbox for "self-forced movement?", a field for how far to move self, and dropdowns for in which direction relative to token facing you move in.
+> - the template in which its attack effects.
+> - A drop-in box for what effect it applies on activation, if any (self)
+> - A drop-in box for what effect it applies on hit, if any.
+
+> ###### Action: Passive
+> *A passive skill applies an effect for a set period of time. Out of combat, this time is tracked in real minutes. In combat, this time is tracked in timeline steps (seven per round). It's necessary to define both.*
+> - **Within its rules tab:**
+> - A checkbox for is the effect time unlimited. If checked, the "active for" field will disappear. 
+> - How long the skill is active for (two fields, one for minutes and one for actions)
+> - Write the effect applied by this item. *(most likely will just be a json field? PF2E's foundry port has a very comprehensive implementation)*
+
+> ###### Action: Spell
+> *It's like an offensive action, except targeted.*  
+> *Spells either require a token to target, or they can be placed anywhere. So long as its within sight and so long as its within the maximum distance set in rules.*   
+> *Spells place lingering templates on the field. A spell's primary function is to crowd control by corralling enemies. Mages create stage hazards.*
+> - **Within its rules tab**:
+> - A checkbox for "Can the spell be passed through". If unchecked, it creates invisible walls along its template.
+> - A checkbox for "Requires target".
+> - A field for maximum distance away from the caster that the spell can be placed (in grid units).
+> - The shape of the template.
+> - An effect can be chosen to be applied to tokens passing through the spell.
+> - If an effect asks for a roll check, then passing through a spell by means of an enemy's knockback immediately results in the worst outcome. While passing through the spell by means of your own skill's forced movement immediately results in the best outcome.
+###### about its sheet:
+I don't have a clear picture so I don't wanna waste time by trying to have something to put here! Will be in the mockups.
+
+
+---
+
+### Character item: "Training" <a name="training"></a>
+###### description:
+*Trainings are the primary method of character growth.*
+*Trainings grant characters effects, access to items, special windows like component spellcasting or crafting.*
+
+*Trainings can only be held in a character's repertoire tab. Trainings are the only thing that a repertoire tab can hold. Trainings within the repertoire tab appear as item cards*  
+###### about its sheet:
+- Its header has no left-side icon.
+- Its header is fully backed by a banner image.
+- It has a description tab, an effects tab, and a rules tab.
+##### a tally of its tabs:
+- description
+- effects
+- rules
 
 ## Documents, actors
 
-#### Actor
-The human character type. An actor's sheet has a prominent weapon slot. When a weapon is inserted into the slot, the actions contained in the weapon fills out on the character sheet below the slot. Actors have stats, and an equipment panel with slots for head, chest, shoulders, arms, hands, waist, legs, feet, two slots for neck, wrist, ten slots for rings. The sheet also has an inventory with six slots. These initial six slots are special and have different properties than slots added by storage items. The character sheet has a repertoire tab, where training items are stored and displayed in item cards that can be dragged and rearranged by the player. There's also an "active effects" tab which displays all effects currently on the actor. The "actions" tab which lists all action-type items the character can use, including those registered by a weapon. A GM can manually drag action-items into a character sheet's actions tab.
+> #### Actors list
+> - [Actor](#actor)
+> - [Monster](#monster)
+> - [Vehicle](#vehicle)
+> - [Loot](#loot)
+> - [Deployable](#deployableactor)
+> - [Point of Interest](#pointofinterest)
+> - [Project](#project)
 
-#### Monster
+---
+
+### Actor <a name="actor"></a>
+##### Overview  
+The human character type.
+
+An actor's sheet has a prominent weapon slot. When a weapon is inserted into the slot, the actions contained in the weapon fills out on the character sheet below the slot. Actors have stats, and an equipment panel with slots for head, chest, shoulders, arms, hands, waist, legs, feet, two slots for neck, wrist, ten slots for rings. The sheet also has an inventory with six slots. These initial six slots are special and have different properties than slots added by storage items. The character sheet has a repertoire tab, where training items are stored and displayed in item cards that can be dragged and rearranged by the player. There's also an "active effects" tab which displays all effects currently on the actor. The "actions" tab which lists all action-type items the character can use, including those registered by a weapon. A GM can manually drag action-items into a character sheet's actions tab.
+
+---
+
+### Monster <a name="monster"></a>
+##### Overview  
 The character type for all things meant to be battled. It has stats, an active effects tab, an actions tab. Its sheet features two types of inventory, both of them act as loot lists. The first is for guaranteed drops, and acts like a regular inventory. The second is for random chance drops and works by dragging a rollable table into its field to link it. The monster token can also configure extra "parts," secondary tokens with linked movement. Extra parts can be used to denote the tail of a dragon, the limbs of a giant, etc.
 
-#### Vehicle
+---
+
+### Vehicle <a name="vehicle"></a>
+##### Overview  
 Is like monsters, except its linked to a scene. Players nearby a vehicle token can interact with it to enter it. Vehicles can be locked through their character sheets.
 
-#### Loot
+---
+
+### Loot <a name="loot"></a>
+##### Overview  
 Is the type of token that appears to denote an item lying on the floor. When a player drops an item, it appears as loot. Loot can also be placed by the GM for an item which can be picked up off the floor. Players can pick loot up by dragging and dropping the token into their character sheets. The loot sheet displays the item's sheet. Character items can't create a loot. Deployables can't create a loot either since they create a deployable type token.
 
-#### Deployable
+---
+
+### Deployable <a name="deployableactor"></a>
+##### Overview  
 Is the type of token that appears when a deployable item is dropped by the player, similar to loot except they have a specific function. A tent kit could create a set of tiles and then delete them afterwards. A turret could set the player stationary and give them a special attack. Because of how vastly different each type of deployable could be, it should be freely programmable. The deployable sheet has three extra sections in the rules tab: "javascript" "handlebars" "css" where you program the deployable and its sheet. For a GM, the sheet that's created by the rules tab gets wrapped into a viewable form inside the deployable sheet. For a player, they see only the sheet created by the rules tab.
 
-#### Point of Interest
+---
+
+### Point of Interest <a name="pointofinterest"></a>
+##### Overview  
 Can be configured in two modes: Vista and Gathering point. In vista mode, interacting with a POI token will display a linked journal entry. In gathering mode, a POI token has four fields: tool tags, yield, integrity, table. Tool tags is just a tag input field. The gathering point will only accept interaction if a the character has a weapon with matching tags equipped. If no tags are present in the input field, the POI will require no tools. Yield is percentage chance to gain more items on interaction. If set to 0, the player will always get 1 item. If set to 150, players will always get 2 items with a 50% chance to get 3. Integrity is a simple number of uses before the POI token disappears and its sheet force closes. Table is a table of possible drops. Its linked just like a monster's loot table.
 
-#### Project
+---
+
+### Project <a name="project"></a>
+##### Overview  
 Is an interactable marker that displays progress toward a goal. It can be configured to ask for items or money, and players can contribute to it.
-
-
-## Documents, Items 
-
-All items are subject to a universal tagging system. Tags are managed by a centralized tag manager, accessible through system settings, and are used to manage several rules. Like, which items can be dragged into which slots or which items are inert outside of which slots. Tags appear as a small text field inside the header, underneath the item's name. In the rules tab, items have a "hidden tags" section, which has the same function as the header tags section. Tags always appear as chip inputs wherever they are. Right clicking a tag toggles its display between its label and its UUID. The tag input field, the tagging system, are all isolated modules that get imported in.
-
-#### Physical item: "Material" 
-Is an inanimate item type. Its item sheet is made of two panels: Its image, which spans the left side of the sheet. And the description and rules tabs, on the right. It also has a price field, which exists as a footer in the right side panel.
-
-#### Physical item: "Weapon" 
-A weapon's item sheet has a field to drag and drop Action items. They'll display as action cards within the item sheet. This is effectively an item's effects tab, without the tab. If you can import the effects tab without displaying a tab, that would be wonderful. A weapon has a price footer.
-
-#### Physical item: "Tool" 
-Tools are a general purpose for any item which used. A bomb, a trap kit, a magnifying glass, for some examples. Its sheet looks like a material's sheet except it has an Effects tab. In the rules tab, there's a checkbox for inert. If this is checked, actions held in the tool's effects tab won't appear in the player's actions tab.
-
-#### Physical item: "Storage" 
-Storage items grant extra slots in a player's inventory. Within the rules tab is an equipment checkbox. If toggled, then the storage item must be placed in an equipment slot or else it'll be inert. Even if equipment is unchecked, storage items must be placed in one of the original six inventory slots or be inert. Also in the rules tab is a "has inventory" checkbox and a "can be carried" checkbox. If has inventory is checked, the item sheet will gain an inventory tab which mirrors what's placed in the inventory slots granted by the item in the actor's inventory. Removing this item from the player's inventory and placing it on the canvas will take its stored items with it, changing it into something more like a chest. If "can be carried" is unchecked, it can only store items while in canvas form. Moving a storage with "can be carried" unchecked into the player's inventory will result in its items dropping onto the canvas. The player may drop the storage down to use it as normal. When a player hovers over a storage item in their inventory, the slots it adds is highlighted. That way, you can keep track of what exists where.
-
-#### Physical item: "Consumable" 
-Consumables look like a tool sheet, except above the right side panel, there's a panel above it with a prominent "Use" button. And to the right of that button, a charges display with how many maximum uses an item has versus how many uses it has left. The use button casts the action held in the effects tab and prints the effect's item card to chat along with a "Character used:". In the rules tab, there's a checkbox for Refillable. If refillable is not checked, then an item's uses dropping to 0 by means of clicking the use button will result in that item disappearing from the player's inventory and the item sheet force closing. The panel containing a consumable's use button will only appear if either the item is inside the using player's inventory or if the player's token is within 5ft of the consumable's loot token.
-
-#### Physical item: "Equipment"
-Equipment items look like a tool sheet. Equipment is inert until placed in a character's equipment slot. 
-
-#### Physical item: "Kit"
-A kit is an item which stores other items for immediate use.
-
-#### Physical item: "Deployable"
-The item version of a deployable. Can be stored in inventories. When dragged onto the canvas, will result in a deployable-type token.
-
-#### Character item: "Action"
-Can be configured in several modes: Maneuver, Offensive, Defensive, Passive, Spell. 
-> ###### Action: Maneuver
-> A maneuver can be configured in its rules tab, if it's unavailable in combat, how many (if any) actions it costs, and what effect it applies.
-
-> ###### Action: Offensive
-> This is a melee attack. Within its rules tab, can be configured how how much it deals in HP damage, BREAK, knockback in tile units, self-forced movement and in which direction, the template in which its attack effects, the effect (if any) which is applied to tokens struck by the attack, if this is a reaction (checkbox), how many actions this attack consumes.
-
-> ###### Action: Defensive
-> A defensive action reacts to incoming attacks. In its rules tab, can be configured if it's a reaction (checkbox), how many actions it costs, how many attacks it can activate for (it simply won't apply to any more attacks than this number for this round), what effect is applied when the action activates, and if the action can be targeted onto another token.
-
-> ###### Action: Passive
-> A passive skill applies an effect for a set period of time. Out of combat, this time is tracked in real minute. In combat, this time is tracked in timeline steps (seven per round). It's necessary to define both. Within its rules tab is configurable how long the skill is active for (two fields, one for minutes and one for actions) and what effect the skill applies. 
-
-> ###### Action: Spell
-> It's like an offensive action, except targeted. Within its rules tab, can be configured if it requires a token to target. If that's not checked, then the spell can be placed anywhere, so long as its within sight and so long as its within the distance later set in the rules tab. What is also set is the maximum distance away from the caster that the spell can be placed. The shape of the template. As well as if the spell can be passed through, which is a checkbox. An effect can be chosen to be applied to tokens passing through the spell. If an effect asks for a roll check, then passing through a spell by means of an enemy's knockback immediately results in the worst outcome. While passing through the spell by means of your own skill's forced movement immediately results in the best outcome.
-
-#### Character item: "Training"
-Trainings can only be held in a repertoire tab. Trainings are the only thing that a repertoire tab can hold. Trainings have an effects tab, and so any effectives held by a training will apply to the character holding it. Trainings within the repertoire tab appear as thin cards previewing their image and description. Trainings can be dragged and rearranged within the repertoire tab, but players cannot remove a training item.
 
 ---
 
