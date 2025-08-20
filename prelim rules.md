@@ -158,10 +158,13 @@ In a lot of sheets, I list the same elements over and over so maybe it'll help t
 
 *Storages like the magic ring have no individually accessible internal inventory. Its character sheet has no visible slots. When the ring is taken off, items stored in its slots drop out of the player's inventory and onto the ground.*
 
-*Storages, like the chest have internal inventory slots but do not add to the character's inventory.*
+*Storages, like the chest have internal inventory slots but do not add to the character's inventory.*  
+*Players may take chests into their inventories for the purpose to move to a different scene or to sell, but the chest will drop all stored items.*
+*Chests also have a unique sheet display.*
 
 ###### about its sheet:
-<img width="3000" height="2048" alt="Storage" src="https://github.com/user-attachments/assets/ef52e58c-7203-4031-a49c-e0140fd013ee" />  
+<img width="3001" height="2012" alt="Storage" src="https://github.com/user-attachments/assets/9e9d2b33-5943-4404-b99d-8db1cbcdb0c3" />
+
 
 - Copies the stylings of the material sheet, except:
 - The sheet's display changes radically depending on options set in the rules tab.
