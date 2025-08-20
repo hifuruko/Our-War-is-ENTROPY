@@ -72,6 +72,8 @@ In a lot of sheets, I list the same elements over and over so maybe it'll help t
 ###### description:
 *Is an inanimate item type. It will most commonly be used for treasures and baubles.*
 ###### about its sheet:
+<img width="3007" height="1056" alt="material sheet" src="https://github.com/user-attachments/assets/00209c88-72a9-40a9-a417-67f2987cbcf6" />  
+
 - Its item sheet is made of two panels laid out horizontally.
 - **Within the left panel**: Is its image, spanning a large section of the sheet.
 - Above the image, in like Header4 text is its name.
@@ -107,6 +109,8 @@ In a lot of sheets, I list the same elements over and over so maybe it'll help t
 *Weapons have different qualities, like light or heavy. A quality adjusts the effectiveness of an action belonging to the item in question depending on a character's stats. Like a weapon with the heavy quality will be better for characters with a high weight class*
 
 ###### about its sheet:
+<img width="2966" height="1017" alt="weapon sheet" src="https://github.com/user-attachments/assets/c62aaaa5-2fc5-43d5-91c3-a2e4ef74eeca" />  
+
 - Copies the stylings of the material sheet, except:
 - **Within the left panel**: The description is now on the left panel, beneath the item image.
 - The quality is displayed as something like a chip to the right of the item's name.
@@ -128,6 +132,8 @@ In a lot of sheets, I list the same elements over and over so maybe it'll help t
 
 *What makes a tool different from an equipment item is that it isn't rendered inert if not in an equipment slot. Although actions from a tool won't be carried over to the player's actions tab. The experience I want to make in gameplay by doing this is that a player will have to dig around their inventory for the tool when they remember they have it, rather than simply perusing their actions list until they find something that fits their situation.*
 ###### about its sheet:
+<img width="1504" height="1011" alt="tool" src="https://github.com/user-attachments/assets/1dbfeb8c-f283-417d-a515-ebaf7179cd46" />  
+
 - Copies the stylings of the material sheet, except:
 - **Within the right panel**: An effects tab, which goes alongside the description tab.
 - **Within the rules tab**: A checkbox for "always inert" which hides the contents of the effects tab from players.
@@ -155,6 +161,8 @@ In a lot of sheets, I list the same elements over and over so maybe it'll help t
 *Storages, like the chest have internal inventory slots but do not add to the character's inventory.*
 
 ###### about its sheet:
+<img width="3000" height="2048" alt="Storage" src="https://github.com/user-attachments/assets/ef52e58c-7203-4031-a49c-e0140fd013ee" />  
+
 - Copies the stylings of the material sheet, except:
 - The sheet's display changes radically depending on options set in the rules tab.
 - **Within the rules tab**: A text field to input the number of slots this storage has.
@@ -179,6 +187,8 @@ In a lot of sheets, I list the same elements over and over so maybe it'll help t
 *An item which has charges which tick down on use.*  
 *On use, it grants active effects..*
 ###### about its sheet:
+<img width="1498" height="1041" alt="consumable" src="https://github.com/user-attachments/assets/ece116d7-3e09-4358-840e-96de15867980" />  
+
 - Copies the stylings of a material sheet except:
 - **Within the right side panel**: There's a new internal header with a "Use" button to the left and a charges count to the right.
 - Has an effects tab, which is hidden from the player.
